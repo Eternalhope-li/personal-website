@@ -1,4 +1,4 @@
-package com.personal.website.config;
+﻿package com.personal.website.config;
 
 import com.personal.website.service.UserService;
 import org.springframework.boot.CommandLineRunner;
@@ -22,9 +22,16 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (!userService.existsByUsername(adminUsername)) {
-            userService.register(adminUsername, adminPassword, "ADMIN");
-            System.out.println(">>> Admin user created");
+        try {
+            if (!userService.existsByUsername(adminUsername)) {
+                userService.register(adminUsername, adminPassword, "ADMIN");
+                System.out.println(">>> Admin user created: " + adminUsername);
+            } else {
+                System.out.println(">>> Admin user already exists: " + adminUsername);
+            }
+        } catch (Exception e) {
+            System.err.println(">>> DataInitializer: Could not initialize admin user - " + e.getMessage());
+            // Non-fatal: the app can still function without admin init
         }
     }
 }
