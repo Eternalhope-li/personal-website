@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{user.profile.title} + ' | ' + #{nav.logo}">My Profile | Personal Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="alternate icon" th:href="@{/favicon.svg}">
+</head>
+<body>
+    <div class="background-effects"><div class="gradient-orb"></div><div class="gradient-orb"></div><div class="gradient-orb"></div></div>
+    <div class="grid-overlay"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo"><span th:text="#{nav.logo}">Portfolio</span> <span th:text="#{nav.logo.suffix}">// dev</span></a>
+            <ul class="nav-links">
+                <li><a href="/" th:text="#{nav.home}">Home</a></li>
+                <li><a href="/about" th:text="#{nav.about}">About</a></li>
+                <li><a href="/projects" th:text="#{nav.projects}">Projects</a></li>
+                <li><a href="/blog" th:text="#{nav.blog}">Blog</a></li>
+                <li><a href="/contact" th:text="#{nav.contact}">Contact</a></li>
+                <li style="position:relative;">
+                    <a href="#" id="moreToggle" class="more-link" onclick="event.preventDefault();document.getElementById('moreDropdown').classList.toggle('show');" th:text="#{nav.more}" style="color:var(--text-secondary);font-size:0.9rem;font-weight:500;">More <i class="fas fa-chevron-down" style="font-size:0.7rem;margin-left:4px;"></i></a>
+                    <div id="moreDropdown" style="display:none;position:absolute;top:100%;right:0;background:var(--bg-secondary);border:1px solid var(--glass-border);border-radius:12px;padding:8px;min-width:160px;box-shadow:var(--shadow-lg);z-index:100;" onmouseleave="this.classList.remove('show')">
+                        <a href="/timeline" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;"><i class="fas fa-stream" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.timeline}">Timeline</span></a>
+                        <a href="/resume" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;"><i class="fas fa-file-alt" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.resume}">Resume</span></a>
+                        <a href="/friends" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;"><i class="fas fa-link" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.friends}">Friends</span></a>
+                        <a href="/comments/guestbook" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;"><i class="fas fa-comment-dots" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.guestbook}">Guestbook</span></a>
+                    </div>
+                </li>
+                <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button></li>
+                <li><a th:if="${#locale.language == 'zh'}" href="?lang=en" class="lang-switch"><span th:text="#{nav.switch.lang}">EN</span></a><a th:if="${#locale.language != 'zh'}" href="?lang=zh_CN" class="lang-switch"><span th:text="#{nav.switch.lang}">ZH</span></a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <section style="padding-top:160px;">
+        <div class="section-header fade-in visible">
+            <span class="section-tag" th:text="#{user.profile.title}">My Profile</span>
+            <h2 class="section-title" th:text="#{user.profile.welcome}">Welcome!</h2>
+            <p class="section-subtitle" th:text="#{user.profile.subtitle}">Your personal dashboard</p>
+        </div>
+
+        <div style="max-width:600px;margin:0 auto;">
+            <div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:48px 32px;backdrop-filter:blur(10px);text-align:center;">
+                <div style="width:80px;height:80px;border-radius:50%;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:2rem;color:#fff;font-weight:700;" th:text="${#strings.substring(user.username, 0, 1).toUpperCase()}">U</div>
+                <h3 style="font-size:1.5rem;margin-bottom:8px;" th:text="${user.username}">username</h3>
+                <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:16px;">
+                    <span th:text="#{user.profile.role}">Role:</span> <span th:text="${user.role}" style="color:var(--accent-2);">USER</span>
+                </p>
+                <p style="color:var(--text-muted);font-size:0.85rem;">
+                    <span th:text="#{user.profile.joined}">Joined:</span> <span th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}">2026-01-01</span>
+                </p>
+                <div style="margin-top:32px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                    <a href="/" class="btn btn-secondary"><i class="fas fa-home"></i> <span th:text="#{nav.home}">Home</span></a>
+                    <a href="/logout" class="btn btn-secondary" style="border-color:rgba(253,121,168,0.3);color:var(--accent-3);"><i class="fas fa-sign-out-alt"></i> <span th:text="#{user.logout}">Logout</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links" style="display:flex;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap;">
+                <a href="/" style="color:var(--text-muted);font-size:0.85rem;text-decoration:none;" th:text="#{footer.home}">Home</a>
+                <a href="/about" style="color:var(--text-muted);font-size:0.85rem;text-decoration:none;" th:text="#{footer.about}">About</a>
+                <a href="/projects" style="color:var(--text-muted);font-size:0.85rem;text-decoration:none;" th:text="#{footer.projects}">Projects</a>
+                <a href="/blog" style="color:var(--text-muted);font-size:0.85rem;text-decoration:none;" th:text="#{footer.blog}">Blog</a>
+                <a href="/contact" style="color:var(--text-muted);font-size:0.85rem;text-decoration:none;" th:text="#{footer.contact}">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p style="color:var(--text-muted);font-size:0.85rem;margin-top:12px;" th:utext="#{footer.copyright}">&copy; 2026 Rice Cooker.</p>
+        </div>
+    </footer>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
+
+

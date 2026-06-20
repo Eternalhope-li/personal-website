@@ -1,0 +1,23 @@
+﻿server:
+  port: 8080
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 10
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        secure: true
+        http-only: true
+        same-site: strict
+
+spring:
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+
+logging:
+  level:
+    com.personal.website: WARN
+    org.springframework: ERROR

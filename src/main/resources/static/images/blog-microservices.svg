@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <rect width="400" height="200" fill="#1a1a2e" rx="12"/>
+  <defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:#6c5ce7"/><stop offset="1" style="stop-color:#a29bfe"/></linearGradient></defs>
+  <circle cx="80" cy="60" r="22" fill="rgba(108,92,231,0.2)" stroke="rgba(108,92,231,0.3)" stroke-width="1"/>
+  <circle cx="200" cy="60" r="22" fill="rgba(162,155,254,0.2)" stroke="rgba(162,155,254,0.3)" stroke-width="1"/>
+  <circle cx="320" cy="60" r="22" fill="rgba(108,92,231,0.2)" stroke="rgba(108,92,231,0.3)" stroke-width="1"/>
+  <line x1="102" y1="60" x2="178" y2="60" stroke="rgba(108,92,231,0.3)" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="222" y1="60" x2="298" y2="60" stroke="rgba(108,92,231,0.3)" stroke-width="2" stroke-dasharray="4,4"/>
+  <rect x="60" y="110" width="280" height="6" rx="3" fill="rgba(255,255,255,0.08)"/>
+  <rect x="80" y="125" width="240" height="6" rx="3" fill="rgba(255,255,255,0.05)"/>
+  <rect x="100" y="140" width="200" height="6" rx="3" fill="rgba(255,255,255,0.03)"/>
+</svg>

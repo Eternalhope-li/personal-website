@@ -1,0 +1,15 @@
+﻿server:
+  servlet:
+    session:
+      cookie:
+        secure: false
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    com.personal.website: DEBUG

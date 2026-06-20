@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目管理 | 管理后台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:"Inter",sans-serif;background:#0a0a0f;color:#f0f0f5;line-height:1.6;}
+        .admin-nav{background:rgba(10,10,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+        .admin-nav .logo{font-weight:700;background:linear-gradient(135deg,#6c5ce7,#fd79a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .admin-nav a{color:#8888a0;text-decoration:none;font-size:0.9rem;margin-left:20px;}
+        .admin-nav a:hover{color:#f0f0f5;}
+        .container{max-width:1200px;margin:0 auto;padding:32px 24px;}
+        .card{padding:24px;border-radius:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);margin-bottom:32px;}
+        .form-group{margin-bottom:16px;}
+        .form-group label{display:block;font-size:0.85rem;color:#8888a0;margin-bottom:6px;}
+        .form-group input,.form-group textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:#f0f0f5;font-size:0.9rem;font-family:inherit;}
+        .form-row{display:flex;gap:16px;}
+        .form-row .form-group{flex:1;}
+        table{width:100%;border-collapse:collapse;margin-bottom:32px;}
+        th,td{padding:12px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.9rem;}
+        th{color:#8888a0;font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;}
+        td{color:#d0d0e0;}
+        .btn{padding:8px 16px;border-radius:100px;cursor:pointer;border:none;font-family:inherit;font-weight:500;font-size:0.85rem;text-decoration:none;display:inline-block;}
+        .btn-primary{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;}
+        .btn-primary:hover{opacity:0.9;}
+        .btn-success{background:rgba(0,184,148,0.2);color:#00b894;}
+        .btn-success:hover{background:rgba(0,184,148,0.3);}
+        .btn-danger{background:rgba(253,121,168,0.2);color:#fd79a8;}
+        .btn-sm{padding:6px 14px;font-size:0.8rem;}
+        .td-desc{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    </style>
+</head>
+<body>
+    <div class="admin-nav">
+        <div class="logo">电饭煲 管理后台</div>
+        <div>
+            <a href="/"><i class="fas fa-home"></i> 查看网站</a>
+            <a href="/admin/blogs"><i class="fas fa-edit"></i> 博客</a>
+            <a href="/admin/projects"><i class="fas fa-cube"></i> 项目</a>
+            <a href="/admin/comments"><i class="fas fa-comment"></i> 评论</a>
+            <a href="/admin/settings"><i class="fas fa-cog"></i> 设置</a>
+            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> 退出</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2 style="margin-bottom:24px;"><i class="fas fa-cube" style="color:#a29bfe;"></i> 项目管理</h2>
+        <div class="card">
+            <h3 style="margin-bottom:16px;" th:text="${project != null} ? '编辑项目' : '新增项目'">新增/编辑项目</h3>
+            <form method="post" th:action="@{/admin/projects/save}">
+                <input type="hidden" name="id" th:value="${project != null ? project.id : ''}" />
+                <div class="form-group"><label>项目标题</label><input type="text" name="title" th:value="${project != null ? project.title : ''}" required /></div>
+                <div class="form-group"><label>描述</label><textarea name="description" rows="3" th:text="${project != null ? project.description : ''}"></textarea></div>
+                <div class="form-row">
+                    <div class="form-group"><label>在线演示URL</label><input type="text" name="demoUrl" th:value="${project != null ? project.demoUrl : ''}" placeholder="https://..." /></div>
+                    <div class="form-group"><label>源代码URL</label><input type="text" name="githubUrl" th:value="${project != null ? project.githubUrl : ''}" placeholder="https://github.com/..." /></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>封面图片URL</label><input type="text" name="imageUrl" th:value="${project != null ? project.imageUrl : ''}" placeholder="https://..." /></div>
+                    <div class="form-group"><label>技术栈（逗号分隔）</label><input type="text" name="technologies" th:value="${project != null ? project.technologies : ''}" placeholder="Spring Boot, Vue.js, MySQL" /></div>
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="${project != null} ? '更新项目' : '保存项目'">保存项目</button>
+                <a th:if="${project != null}" href="/admin/projects" class="btn btn-sm btn-success" style="display:inline-block;padding:8px 16px;margin-left:8px;"><i class="fas fa-times"></i> 取消编辑</a>
+            </form>
+        </div>
+        <table>
+            <tr><th>标题</th><th>描述</th><th>技术栈</th><th>日期</th><th>操作</th></tr>
+            <tr th:each="p : ${projects}">
+                <td th:text="${p.title}">Title</td>
+                <td class="td-desc" th:text="${p.description}">Desc</td>
+                <td><span class="badge" th:text="${p.technologies}">tech</span></td>
+                <td th:text="${#temporals.format(p.createdAt, 'yyyy-MM-dd')}">Date</td>
+                <td style="white-space:nowrap;">
+                    <a th:href="@{/admin/projects/edit/{id}(id=${p.id})}" class="btn btn-sm btn-success"><i class="fas fa-pen"></i> 编辑</a>
+                    <a th:href="@{/admin/projects/delete/{id}(id=${p.id})}" class="btn btn-sm btn-danger" onclick="return confirm('确认删除这个项目？')"><i class="fas fa-trash"></i> 删除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

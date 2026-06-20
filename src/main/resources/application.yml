@@ -1,0 +1,80 @@
+﻿server:
+  port: ${PORT:8080}
+  compression:
+    enabled: true
+    mime-types: text/html,text/css,application/javascript,application/json,image/svg+xml
+    min-response-size: 1024
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      timeout: 30m
+      tracking-modes:
+        - cookie
+      cookie:
+        same-site: lax
+        http-only: true
+        secure: false
+  tomcat:
+    use-relative-redirects: true
+    max-http-form-post-size: 20MB
+    max-http-request-header-size: 20KB
+    remoteip:
+      remote-ip-header: x-forwarded-for
+      protocol-header: x-forwarded-proto
+
+spring:
+  web:
+    resources:
+      static-locations: file:./frontend/dist/,classpath:/static/
+      cache:
+        cachecontrol:
+          max-age: 604800
+          must-revalidate: true
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3306/personal_website?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root123}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  thymeleaf:
+    cache: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+admin:
+  username: ${ADMIN_USERNAME:001}
+  password: ${ADMIN_PASSWORD:xiaoyao888}
+
+storage:
+  type: filesystem
+
+logging:
+  level:
+    com.personal.website: WARN
+    org.springframework: WARN
+  file:
+    name: logs/website.log
+    max-size: 50MB
+    max-history: 7
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

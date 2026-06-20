@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统设置 | 管理后台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:"Inter",sans-serif;background:#0a0a0f;color:#f0f0f5;line-height:1.6;}
+        .admin-nav{background:rgba(10,10,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+        .admin-nav .logo{font-weight:700;background:linear-gradient(135deg,#6c5ce7,#fd79a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .admin-nav a{color:#8888a0;text-decoration:none;font-size:0.9rem;margin-left:20px;}
+        .admin-nav a:hover{color:#f0f0f5;}
+        .container{max-width:1200px;margin:0 auto;padding:32px 24px;}
+        .card{padding:24px;border-radius:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);margin-bottom:32px;}
+        .form-group{margin-bottom:16px;}
+        .form-group label{display:block;font-size:0.85rem;color:#8888a0;margin-bottom:6px;}
+        .form-group input,.form-group textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:#f0f0f5;font-size:0.9rem;font-family:inherit;}
+        .btn{padding:8px 16px;border-radius:100px;cursor:pointer;border:none;font-family:inherit;font-weight:500;font-size:0.85rem;text-decoration:none;display:inline-block;}
+        .btn-primary{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff;}
+        .btn-primary:hover{opacity:0.9;}
+        .btn-sm{padding:6px 14px;font-size:0.8rem;}
+        .skill-tag{display:inline-block;padding:4px 12px;border-radius:100px;background:rgba(108,92,231,0.15);border:1px solid rgba(108,92,231,0.2);color:#a29bfe;margin:3px;font-size:0.85rem;}
+    </style>
+</head>
+<body>
+    <div class="admin-nav">
+        <div class="logo">电饭煲 管理后台</div>
+        <div>
+            <a href="/"><i class="fas fa-home"></i> 查看网站</a>
+            <a href="/admin/blogs"><i class="fas fa-edit"></i> 博客</a>
+            <a href="/admin/projects"><i class="fas fa-cube"></i> 项目</a>
+            <a href="/admin/comments"><i class="fas fa-comment"></i> 评论</a>
+            <a href="/admin/settings"><i class="fas fa-cog"></i> 设置</a>
+            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> 退出</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2 style="margin-bottom:24px;"><i class="fas fa-cog" style="color:#a29bfe;"></i> 系统设置</h2>
+
+        <div class="card">
+            <h3 style="margin-bottom:16px;">网站设置</h3>
+            <form method="post" th:action="@{/admin/settings/save}">
+                <div class="form-group"><label>站点名称</label><input type="text" name="key" value="siteName" /></div>
+                <div class="form-group"><label>值</label><input type="text" name="value" th:value="${siteName}" /></div>
+                <button type="submit" class="btn btn-primary">保存设置</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:16px;">技能管理</h3>
+            <form method="post" th:action="@{/admin/skills/save}">
+                <div class="form-group"><label>技能名称</label><input type="text" name="name" required /></div>
+                <div class="form-group"><label>分类 (如: backend/frontend/cloud)</label><input type="text" name="category" /></div>
+                <button type="submit" class="btn btn-primary">添加技能</button>
+            </form>
+            <div th:if="${#lists.size(skills) > 0}" style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px;">
+                <div th:each="s : ${skills}" style="display:inline-block;">
+                    <span class="skill-tag" th:text="${s.name}">Skill</span>
+                    <a th:href="@{/admin/skills/delete/{id}(id=${s.id})}" style="color:#fd79a8;margin-left:2px;font-size:0.75rem;text-decoration:none;">x</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

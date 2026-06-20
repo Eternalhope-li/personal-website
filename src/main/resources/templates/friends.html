@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends | Personal Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="alternate icon" th:href="@{/favicon.svg}">
+</head>
+<body>
+    <div class="background-effects"><div class="gradient-orb"></div><div class="gradient-orb"></div><div class="gradient-orb"></div></div>
+    <div class="grid-overlay"></div>
+    <nav><div class="nav-container"><a href="/" class="nav-logo"><span th:text="#{nav.logo}">Portfolio</span> <span th:text="#{nav.logo.suffix}">// dev</span></a>
+                        <ul class="nav-links">
+                <li><a href="/" th:classappend="${activeNav == 'home'} ? 'active'" th:text="#{nav.home}">Home</a></li>
+                <li><a href="/about" th:classappend="${activeNav == 'about'} ? 'active'" th:text="#{nav.about}">About</a></li>
+                <li><a href="/projects" th:classappend="${activeNav == 'projects'} ? 'active'" th:text="#{nav.projects}">Projects</a></li>
+                <li><a href="/blog" th:classappend="${activeNav == 'blog'} ? 'active'" th:text="#{nav.blog}">Blog</a></li>
+                <li><a href="/contact" th:classappend="${activeNav == 'contact'} ? 'active'" th:text="#{nav.contact}">Contact</a></li>
+                <li style="position:relative;">
+                    <a href="#" id="moreToggle" class="more-link" onclick="event.preventDefault();document.getElementById('moreDropdown').classList.toggle('show');" th:text="#{nav.more}" style="color:var(--text-secondary);font-size:0.9rem;font-weight:500;">More <i class="fas fa-chevron-down" style="font-size:0.7rem;margin-left:4px;"></i></a>
+                    <div id="moreDropdown" style="display:none;position:absolute;top:100%;right:0;background:var(--bg-secondary);border:1px solid var(--glass-border);border-radius:12px;padding:8px;min-width:160px;box-shadow:var(--shadow-lg);z-index:100;" onmouseleave="this.classList.remove('show')">
+                        <a href="/timeline" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'timeline'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-stream" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.timeline}">Timeline</span></a>
+                        <a href="/resume" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'resume'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-file-alt" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.resume}">Resume</span></a>
+                        <a href="/friends" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'friends'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-link" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.friends}">Friends</span></a>
+                        <a href="/comments/guestbook" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'guestbook'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-comment-dots" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.guestbook}">Guestbook</span></a>
+                    </div>
+                </li>
+                
+                
+                            
+                <li><button class="theme-toggle" id="themeToggle" aria-label="Theme"><i class="fas fa-moon"></i></button></li>
+                <li><a th:if="${#locale.language == 'zh'}" href="?lang=en" class="lang-switch" th:text="#{nav.switch.lang}">EN</a><a th:if="${#locale.language != 'zh'}" href="?lang=zh_CN" class="lang-switch" th:text="#{nav.switch.lang}">ZH</a></li></ul>
+            <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button></div></nav>
+
+        <section style="padding-top:160px;">
+        <div class="section-header fade-in visible">
+            <span class="section-tag" th:text="#{friends.tag}">Network</span>
+            <h2 class="section-title" th:text="#{nav.friends}">Friends</h2>
+            <p class="section-subtitle" th:text="#{friends.subtitle}">Awesome people and great websites I recommend.</p>
+        </div>
+        <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+            <i class="fas fa-link" style="font-size:3rem;display:block;margin-bottom:16px;opacity:0.3;"></i>
+            <p th:text="#{friends.empty}">No friends yet. Add some from the admin panel.</p>
+        </div>
+        <div class="fade-in" style="text-align:center;margin-top:16px;padding:32px;border-radius:var(--radius-md);background:var(--glass-bg);border:1px solid var(--glass-border);">
+            <h3 style="margin-bottom:12px;" th:text="#{friends.cta}">Exchange Links?</h3>
+            <p style="color:var(--text-secondary);margin-bottom:16px;" th:text="#{friends.ctaDesc}">If you have a personal website, feel free to reach out!</p>
+            <a href="/contact" class="btn btn-primary"><span th:text="#{nav.contact}">Contact</span></a>
+        </div>
+    </section>
+    <footer><div class="footer-container"><div class="footer-social">
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div><p th:utext="#{footer.copyright}">&copy; 2026 Alex. Crafted with love using Spring Boot.</p></div></footer>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+

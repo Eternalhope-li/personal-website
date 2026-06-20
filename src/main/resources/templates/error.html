@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${status} + ' | 电饭煲'">Error | Personal Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="alternate icon" th:href="@{/favicon.svg}">
+</head>
+<body style="background:var(--bg-primary);display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;">
+    <div class="background-effects"><div class="gradient-orb"></div><div class="gradient-orb"></div><div class="gradient-orb"></div></div>
+    <div class="grid-overlay"></div>
+    <div style="padding:40px;">
+        <div style="font-size:6rem;font-weight:800;background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;" th:text="${status}">404</div>
+        <h2 th:if="${status} == '404'" style="margin:16px 0 8px;font-size:1.5rem;">页面不存在</h2>
+        <h2 th:unless="${status} == '404'" style="margin:16px 0 8px;font-size:1.5rem;">服务器内部错误</h2>
+        <p th:if="${status} == '404'" style="color:var(--text-muted);margin-bottom:32px;">您要找的页面不存在。</p>
+        <p th:unless="${status} == '404'" style="color:var(--text-muted);margin-bottom:32px;">出点问题了，请稍后再试。</p>
+        <a href="/" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-home"></i> <span>返回首页</span></a>
+    </div>
+</body>
+</html>

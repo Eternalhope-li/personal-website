@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${post != null} ? ${post.title} + ' | ' + #{nav.blog} : #{blogdetail.title} + ' | ' + #{nav.blog}">Blog Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .content h2{font-size:1.6rem;margin:32px 0 16px;color:var(--text-primary)}
+        .content h3{font-size:1.3rem;margin:24px 0 12px;color:var(--text-primary)}
+        .content code{font-family:var(--font-mono);font-size:0.9rem;padding:2px 8px;border-radius:4px;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:var(--accent-2)}
+        .content pre{margin:24px 0;padding:24px;border-radius:var(--radius-sm);background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);overflow-x:auto}
+        .content pre code{background:none;border:none;padding:0;color:var(--text-primary)}
+        .content blockquote{margin:24px 0;padding:16px 24px;border-left:3px solid var(--accent-1);background:rgba(108,92,231,0.05);border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--text-secondary);font-style:italic}
+        .content ul,.content ol{margin:16px 0;padding-left:24px;color:var(--text-secondary)}
+        .content li{margin-bottom:8px}
+    </style>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="alternate icon" th:href="@{/favicon.svg}">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="gradient-orb"></div><div class="gradient-orb"></div><div class="gradient-orb"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo"><span th:text="#{nav.logo}">Portfolio</span> <span th:text="#{nav.logo.suffix}">// dev</span></a>
+                                                <ul class="nav-links">
+                <li><a href="/" th:classappend="${activeNav == 'home'} ? 'active'" th:text="#{nav.home}">Home</a></li>
+                <li><a href="/about" th:classappend="${activeNav == 'about'} ? 'active'" th:text="#{nav.about}">About</a></li>
+                <li><a href="/projects" th:classappend="${activeNav == 'projects'} ? 'active'" th:text="#{nav.projects}">Projects</a></li>
+                <li><a href="/blog" th:classappend="${activeNav == 'blog'} ? 'active'" th:text="#{nav.blog}">Blog</a></li>
+                <li><a href="/contact" th:classappend="${activeNav == 'contact'} ? 'active'" th:text="#{nav.contact}">Contact</a></li>
+                <li style="position:relative;">
+                    <a href="#" id="moreToggle" class="more-link" onclick="event.preventDefault();document.getElementById('moreDropdown').classList.toggle('show');" th:text="#{nav.more}" style="color:var(--text-secondary);font-size:0.9rem;font-weight:500;">More <i class="fas fa-chevron-down" style="font-size:0.7rem;margin-left:4px;"></i></a>
+                    <div id="moreDropdown" style="display:none;position:absolute;top:100%;right:0;background:var(--bg-secondary);border:1px solid var(--glass-border);border-radius:12px;padding:8px;min-width:160px;box-shadow:var(--shadow-lg);z-index:100;" onmouseleave="this.classList.remove('show')">
+                        <a href="/timeline" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'timeline'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-stream" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.timeline}">Timeline</span></a>
+                        <a href="/resume" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'resume'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-file-alt" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.resume}">Resume</span></a>
+                        <a href="/friends" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'friends'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-link" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.friends}">Friends</span></a>
+                        <a href="/comments/guestbook" style="display:block;padding:8px 16px;border-radius:8px;color:var(--text-secondary);font-size:0.85rem;white-space:nowrap;" th:classappend="${activeNav == 'guestbook'} ? 'active'" onmouseover="this.style.background='var(--glass-bg)'" onmouseout="this.style.background='transparent'"><i class="fas fa-comment-dots" style="width:18px;color:var(--accent-2);"></i><span th:text="#{nav.guestbook}">Guestbook</span></a>
+                    </div>
+                </li>
+                
+                
+                            
+                <li><button class="theme-toggle" id="themeToggle" aria-label="Theme"><i class="fas fa-moon"></i></button></li>
+                <li><a th:if="${#locale.language == 'zh'}" href="?lang=en" class="lang-switch" th:text="#{nav.switch.lang}">EN</a><a th:if="${#locale.language != 'zh'}" href="?lang=zh_CN" class="lang-switch" th:text="#{nav.switch.lang}">ZH</a></li></ul>
+            <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <article class="blog-detail" style="max-width:800px;margin:0 auto;padding:calc(var(--nav-height)+60px) 24px 80px;">
+        <div style="width:100%;height:220px;border-radius:var(--radius-md);overflow:hidden;margin-bottom:32px;background:var(--glass-bg);border:1px solid var(--glass-border);"><img src="/images/blog-microservices.svg" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+        <a href="/blog" class="back-link"><i class="fas fa-arrow-left"></i> <span th:text="#{blog.back}">Back to Blog</span></a>
+
+        
+            <h1 th:text="${post.title}">Post Title</h1>
+            <div th:if="${post == null}" style="text-align:center;padding:60px 20px;color:var(--text-muted);"><i class="fas fa-file-alt" style="font-size:3rem;display:block;margin-bottom:16px;opacity:0.3;"></i><p>Post not found.</p><a href="/blog" class="btn btn-outline btn-sm" style="margin-top:16px;"><i class="fas fa-arrow-left"></i> Back to Blog</a></div>
+            <div class="meta">
+                <span th:text="${#temporals.format(post.createdAt, 'MMMM dd, yyyy')}">Date</span>
+                <span th:text="${post.category}">Category</span>
+                <span th:text="${post.content.length() / 200 + ' min read'}">Read time</span>
+            </div>
+            <div class="content" th:text="${post.content}">Content here...</div>
+        </div>
+
+        </article>
+    <!-- Comments Section -->
+    <div style="max-width:800px;margin:0 auto;padding:0 24px 60px;">
+        <h3 style="margin-bottom:20px;">Comments</h3>
+        <div id="comments-container">
+            <div th:each="c : ${comments}" style="padding:16px;border-radius:12px;background:var(--glass-bg);border:1px solid var(--glass-border);margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                    <strong th:text="${c.author}">Author</strong>
+                    <span style="font-size:0.8rem;color:var(--text-muted);" th:text="${#temporals.format(c.createdAt, 'MMM dd, yyyy')}">Date</span>
+                </div>
+                <p style="color:var(--text-secondary);font-size:0.9rem;" th:text="${c.content}">Comment text</p>
+            </div>
+            <div th:if="${#lists.isEmpty(comments)}" style="text-align:center;padding:32px;color:var(--text-muted);">No comments yet. Be the first to comment!</div>
+        </div>
+
+        <form id="comment-form" style="margin-top:32px;padding:24px;border-radius:16px;background:var(--glass-bg);border:1px solid var(--glass-border);">
+            <h4 style="margin-bottom:16px;">Leave a Comment</h4>
+            <input type="hidden" id="commentPostId" th:value="${post != null ? post.id : 0}">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div class="form-group" style="margin:0;"><label for="commentAuthor">Name *</label><input type="text" id="commentAuthor" placeholder="Your name" required></div>
+                <div class="form-group" style="margin:0;"><label for="commentEmail">Email</label><input type="email" id="commentEmail" placeholder="Email (optional)"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:16px;"><label for="commentContent">Comment *</label><textarea id="commentContent" placeholder="Write your comment..." style="min-height:100px;" required></textarea></div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Comment</button>
+        </form>
+    </div>
+
+<footer>
+        <div class="footer-container">
+            <div class="footer-social">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p th:utext="#{footer.copyright}">&copy; 2026 Alex. Crafted with love using Spring Boot.</p>
+        </div>
+    </footer>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
+
+
+
+
+
+
