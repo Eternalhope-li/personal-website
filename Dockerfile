@@ -1,8 +1,6 @@
 FROM eclipse-temurin:17-jre-alpine
-RUN apk add --no-cache curl mysql-client bash
+RUN apk add --no-cache curl
 WORKDIR /app
 COPY app.jar app.jar
-COPY start.sh start.sh
-RUN chmod +x start.sh
 EXPOSE 8080
-CMD ["./start.sh"]
+CMD ["sh", "-c", "echo \"Waiting 30s for MySQL...\" && sleep 30 && echo \"Starting app...\" && java -jar app.jar"]
