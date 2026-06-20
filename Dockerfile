@@ -1,24 +1,18 @@
-# ===== 前端构建 =====
-FROM node:20-alpine AS frontend
+FROM maven:3.9-eclipse-temurin-17
 WORKDIR /app
-COPY frontend/package.json frontend/package-lock.json ./
-RUN npm install
-COPY frontend/ ./
-RUN npm run build
 
-# ===== 后端构建 =====
-FROM maven:3.9-eclipse-temurin-17 AS backend
-WORKDIR /app
+RUN apt-get update -qq && apt-get install -y -qq nodejs npm && rm -rf /var/lib/apt/lists/*
+
+COPY frontend/package.json frontend/package-lock.json ./frontend/
+RUN cd frontend && npm install --no-audit --no-fund
+COPY frontend/ ./frontend/
+RUN cd frontend && npm run build
+
+RUN mkdir -p src/main/resources/static && cp -a frontend/dist/. src/main/resources/static/
+
 COPY pom.xml ./
-COPY --from=frontend /app/dist/ ./src/main/resources/static/
 COPY src/ ./src/
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -q
 
-# ===== 运行环境 =====
-FROM eclipse-temurin:17-jre-alpine
-RUN apk add --no-cache curl
-WORKDIR /app
-COPY --from=backend /app/target/*.jar app.jar
-RUN mkdir -p uploads logs
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+CMD ["sh", "-c", "java -jar target/*.jar"]
