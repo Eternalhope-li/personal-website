@@ -31,6 +31,8 @@ spring:
           max-age: 604800
           must-revalidate: true
   datasource:
+    hikari:
+      initialization-fail-timeout: -1
     url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3306/personal_website?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${MYSQL_USER:root}
