@@ -1,7 +1,8 @@
 FROM eclipse-temurin:17-jre-alpine
-RUN apk add --no-cache tzdata curl
+RUN apk add --no-cache curl mysql-client bash
 WORKDIR /app
 COPY app.jar app.jar
-RUN mkdir -p uploads logs
+COPY start.sh start.sh
+RUN chmod +x start.sh
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+CMD ["./start.sh"]
