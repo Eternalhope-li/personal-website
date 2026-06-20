@@ -3,11 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>电饭煲的个人网站</title>
+  <title>电饭煲的个人网站 - 个人博客与作品集</title>
+  <meta name="description" content="电饭煲的个人网站，分享技术博客、项目作品与生活感悟。Spring Boot + Vue 3 全栈开发。">
+  <meta name="keywords" content="个人网站,博客,作品集,Spring Boot,Vue 3,全栈开发">
+  <meta name="author" content="电饭煲">
+  <meta property="og:title" content="电饭煲的个人网站">
+  <meta property="og:description" content="个人博客与作品集，分享技术与生活">
+  <meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script type="module" crossorigin src="/assets/index-zA3FSLeZ.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DzqDs-93.css">
+<style>
+:root {
+  --bg-primary: #08060e; --bg-secondary: #0f0d1a;
+  --bg-card: rgba(255,255,255,.04); --bg-card-hover: rgba(255,255,255,.08);
+  --glass-bg: rgba(162,155,254,.06); --glass-border: rgba(162,155,254,.12);
+  --text-primary: #ece4ff; --text-secondary: #c8b4e8; --text-muted: #d8c4e8;
+  --accent-1: #6c5ce7; --accent-2: #a29bfe; --accent-3: #fd79a8;
+  --accent-gradient: linear-gradient(135deg,#6c5ce7,#a29bfe,#fd79a8);
+  --font-sans: "Inter","Microsoft YaHei","PingFang SC",system-ui,-apple-system,sans-serif;
+  --font-mono: "JetBrains Mono","Fira Code",monospace;
+  --radius: 16px; --radius-sm: 8px; --radius-lg: 24px;
+  --shadow-glow: 0 0 40px rgba(108,92,231,.15);
+  --shadow-card: 0 4px 20px rgba(0,0,0,.2);
+  --transition: .3s cubic-bezier(.4,0,.2,1);
+  --nav-h: 60px;
+}
+body.light {
+  --bg-primary: #f5f0ff; --bg-secondary: #ebe5f5;
+  --bg-card: rgba(108,92,231,.04); --bg-card-hover: rgba(108,92,231,.08);
+  --glass-bg: rgba(108,92,231,.04); --glass-border: rgba(108,92,231,.1);
+  --text-primary: #1a1028; --text-secondary: #3d2c54; --text-muted: #6b4d8e;
+  --accent-1: #5a4bd1; --accent-2: #7c6edb; --accent-3: #e0608a;
+  --shadow-glow: 0 0 30px rgba(108,92,231,.08);
+  --shadow-card: 0 4px 16px rgba(0,0,0,.06);
+}
+*,*:before,*:after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px;scroll-padding-top:80px}
+body{font-family:var(--font-sans);background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden;min-height:100vh;transition:background .4s ease,color .4s ease}
+a{color:var(--accent-2);text-decoration:none;transition:var(--transition)}
+a:hover{color:#fff}
+::selection{background:var(--accent-1);color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--accent-1);border-radius:3px}
+</style>
+  <script type="module" crossorigin src="/assets/index-DtPK4KcK.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/vendor-CFXdLznx.js">
+  <link rel="modulepreload" crossorigin href="/assets/axios-DNeoPP0G.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-Bz5KbCnb.css">
 </head>
 <body>
   <div id="app"></div>
