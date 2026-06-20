@@ -55,7 +55,8 @@ spring:
     basename: i18n/messages
     encoding: UTF-8
     fallback-to-system-locale: false
-  jackson:
+
+jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
   servlet:

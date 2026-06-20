@@ -2,10 +2,12 @@
 target/
 *.class
 *.jar
+!app.jar
 *.war
 *.log
 *.err
 !target/*.jar
+!app.jar
 
 # Node
 node_modules/
