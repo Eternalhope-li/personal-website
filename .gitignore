@@ -2,7 +2,6 @@
 target/
 *.class
 *.jar
-!app.jar
 *.war
 *.log
 *.err
@@ -34,5 +33,4 @@ tmp_*/
 *.js
 !vite.config.js
 !src/**/*.js
-Dockerfile.bak  
-Dockerfile.slim  
+!frontend/src/**/*.js
